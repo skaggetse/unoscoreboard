@@ -1,6 +1,7 @@
 {
     "require": {
         "php-curl-class/php-curl-class": "^9.19",
-        "symfony/var-dumper": "^6.0"
+        "symfony/var-dumper": "^6.0",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

@@ -1,11 +1,11 @@
 <?php
 class View {
 
-    private $_templateFolder = __DIR__ . '/templates';
+    private $_templateFolder =  __DIR__ . '/../templates';
 
     private function _getTemplate( $template, $data = false ) {
 
-        if ( $data ) {
+        if ( is_array( $data ) ) {
             extract( $data );
         }
         if ( file_exists( $this->_templateFolder . $template ) ) {

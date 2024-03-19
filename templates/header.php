@@ -7,3 +7,11 @@
 </head>
 <body>
     <h1>Bravomedia UNO Scoreboard</h1>
+    <ul>
+        <li>
+            <a href="/scoreboard">Scoreboard</a>
+        </li>
+        <li>
+            <a href="/games">Games</a>
+        </li>
+    </ul>

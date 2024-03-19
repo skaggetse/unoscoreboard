@@ -11,15 +11,18 @@ class Router {
 
         $this->_controller = $controller;
 
-        $this->getRoute();
+        $this->_getRoute();
         
     }
 
-    private function getRoute() {
+    private function _getRoute() {
+        
+        $request = str_replace( sprintf( '?%s', $_SERVER['QUERY_STRING'] ), '',  $_SERVER['REQUEST_URI'] );
+        
         $routes = array_filter( 
             explode( 
                 '/',
-                $_SERVER['REQUEST_URI']
+                $request
             )
         );
 

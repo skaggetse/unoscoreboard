@@ -11,13 +11,17 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
         <tr>
             <td><b>Namn</b></td>
             <td><b>Poäng</b></td>
+            <td><b>Lägg till vinst</b></td>
         </tr>
 
         <?php foreach ( $scores as $score ) : ?>
 
             <tr>
                 <td><?php echo $score[ 'name' ]; ?></td>
-                <td><?php echo $score['points']; ?></td>
+                <td><?php echo $score[ 'points' ]; ?></td>
+                <td>
+                    <?php include __DIR__ . '/components/score-form.php'; ?>
+                </td>
             </tr>
 
         <?php endforeach; ?>
