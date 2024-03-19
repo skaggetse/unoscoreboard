@@ -25,7 +25,7 @@ class Controller {
                 $this->_removeGame();
                 break;
             default :
-                echo '404';
+                $this->_view->getView( '/404.php' );
                 break;
         endswitch;
 
