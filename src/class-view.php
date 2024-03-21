@@ -37,9 +37,10 @@ class View {
                 $args_str[] = sprintf( '%s="%s"', $key, $value );
             }
         }
+        $number_version = random_int(1,4);
         if ( is_array( $points_arr) ) {
             foreach ( $points_arr as $points_part ) {
-                printf( '<img src="%1$s%2$s%3$s%4$s" %5$s>', $path, $points_part, '-' . random_int(1,4), $ext, implode( ' ', $args_str ) );
+                printf( '<img src="%1$s%2$s-%3$s%4$s" %5$s>', $path, $points_part, $number_version, $ext, implode( ' ', $args_str ) );
             }
         }
     }
