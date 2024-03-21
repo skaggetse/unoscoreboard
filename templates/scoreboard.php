@@ -26,7 +26,14 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
                 </td>
                 <td><?php echo $score[ 'name' ]; ?></td>
                 <td>
-                    <img src="/assets/images/<?php echo $score[ 'points' ]; ?>.gif" height="25px"></td>
+                    <?php 
+                        $this->getPointsGifs( 
+                            $score[ 'points' ], 
+                            '/assets/images/', 
+                            '.gif', 
+                            array( 'height' => '25px' )
+                        );
+                    ?>
                 <td>
                     <?php include __DIR__ . '/components/score-form.php'; ?>
                 </td>
