@@ -7,13 +7,13 @@
 $i = 0;
 if ( isset( $scores ) && !empty( $scores ) ) : ?>
 
-    <table width="100%">
+    <table width="100%" id="scoreboard">
 
         <tr>
             <td></td>
             <td><b>Namn</b></td>
-            <td><b>Poäng</b></td>
-            <td><b>Lägg till vinst</b></td>
+            <td><b>Po&auml;ng</b></td>
+            <td><b>L&auml;gg till vinst</b></td>
         </tr>
 
         <?php foreach ( $scores as $score ) : ?>
@@ -24,7 +24,7 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
                         <img src="/assets/images/star.gif" height="30px">
                     <?php endif; ?>
                 </td>
-                <td><?php echo $score[ 'name' ]; ?></td>
+                <td><?php echo str_replace(array('å', 'ä', 'ö', 'Å', 'Ä', 'Ö'), array('&aring;', '&auml;', '&ouml;', '&Aring;', '&Auml;', '&Ouml;'), $score['name']); ?></td>
                 <td>
                     <?php 
                         $this->getPointsGifs( 
@@ -45,6 +45,6 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
 
 <?php else : ?>
 
-    <h3>Du måste spela några spel först.</h3>
+    <h3>Du m&aring;ste spela n&aring;gra spel f&ouml;rst.</h3>
 
 <?php endif;

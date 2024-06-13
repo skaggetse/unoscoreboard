@@ -7,9 +7,36 @@
     <style>
         body {
             font-family: 'comic sans ms';
+            font-size: 14px;
+            background: url( '/assets/images/bg.png' );
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-left: 25px;
+            display: inline;
+            list-style-type: none;
         }
         td {
             text-align: center;
+        }
+        
+        #scoreboard {
+            border-collapse: collapse;
+        }
+        #scoreboard tr:nth-child(4n+2) {
+            background: rgba( 255,0,0,0.1);
+        }
+        #scoreboard tr:nth-child(4n+3) {
+            background: rgba( 0,255,0,0.1);
+        }
+        #scoreboard tr:nth-child(4n+4) {
+            background: rgba( 0,0,255,0.1);
+        }
+        #scoreboard tr:nth-child(4n+5) {
+            background: rgba( 255,255,0,0.1);
         }
     </style>
 </head>
@@ -17,7 +44,7 @@
     <table width="1024px">
         <tr>     
             <td colspan=2>
-                <img src="/assets/images/uno-plusfour.gif" height="200px">
+                <img src="/assets/images/uno-plusfour.gif" height="175px">
             </td>
             <td colspan=8>
                 <table width="100%">                               
@@ -39,7 +66,7 @@
                 </table>
             </td>
             <td colspan=2>
-                <img src="/assets/images/uno-hand.gif"height="200px">
+                <img src="/assets/images/uno-hand.gif"height="175px">
             </td>
         </tr>
         <tr>

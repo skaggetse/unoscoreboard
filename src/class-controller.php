@@ -65,12 +65,36 @@ class Controller {
      */
     private function _getGames() {
         
-        $games = $this->_api->getGames();
+        if ( isset( $_GET['month'] ) ) {
+            $month = date( 'Y-m', strtotime( $_GET['month'] ) );
+        } else {
+            $month = date( 'Y-m' );
+        }
+        
+        $games = $this->_getMontlyGames( $this->_api->getGames(), $month );
         
         uasort( $games, array( $this, '_sortGames') );
 
-        $this->_view->getView( '/games.php', array( 'games' => $games ) );
+        $this->_view->getView( '/games.php', array( 'games' => $games, 'month' => $month, 'players' => $this->_api->getPlayers() ) );
 
+    }
+    
+    /**
+     * Get monthly games
+     */
+    private function _getMontlyGames( $games, $date = false ) {
+        if ( ! $date ) {
+            $date = date( 'Y-m' );
+        }
+        $monthly_games = array();
+        foreach ( $games as $game ) {
+            $month = date( 'Y-m', strtotime( $game->game->timestamp ) );
+            if ( $date === $month ) {
+                $monthly_games[] = $game;
+            }
+        }
+        
+        return $monthly_games;
     }
     
     /**
