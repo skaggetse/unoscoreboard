@@ -37,7 +37,7 @@ if ( isset( $games ) && !empty( $games ) ) : ?>
         <?php foreach ( $games as $game ) : ?>
             <?php $i++; ?>
             <tr>
-                <td><?php echo date( 'd M h:m', strtotime( $game->game->timestamp ) ); ?></td>
+                <td><?php echo date( 'd M h:i', strtotime( $game->game->timestamp ) ); ?></td>
                 <td><?php echo $game->player->name; ?>
                 <?php echo $game->player->id; ?></td>
                 <td>

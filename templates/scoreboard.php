@@ -17,6 +17,7 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
         </tr>
 
         <?php foreach ( $scores as $score ) : ?>
+            <?php if ( 0 == $score[ 'points' ] ) continue; ?>
             <?php $i++; ?>
             <tr>
                 <td>
@@ -40,9 +41,11 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
             </tr>
 
         <?php endforeach; ?>
-
+        
+        
     </table>
-
+    <br /><br />
+    <a href="/players">Add player</a>
 <?php else : ?>
 
     <h3>Du m&aring;ste spela n&aring;gra spel f&ouml;rst.</h3>

@@ -18,6 +18,9 @@ class Controller {
             case 'games' :
                 $this->_getGames();
                 break;
+            case 'players' :
+                $this->_getPlayers();
+                break;
             case 'addScore' :
                 $this->_addScore();
                 break;
@@ -57,6 +60,35 @@ class Controller {
         uasort( $scores, array( $this, '_sortScores') );
         
         $this->_view->getView( '/scoreboard.php', array( 'scores' => $scores ) );
+        
+    }
+    
+    /**
+     * Set data and view for players
+     */
+    private function _getPlayers() {
+
+        $scores = array();
+
+        $players = $this->_api->getPlayers();
+
+        if ( ! empty( $players ) ) {
+
+            foreach ( $players as $player ) {
+
+                $scores[] = array(
+                    'id' => $player->id,
+                    'name' => $player->name,
+                    'points' => $this->_api->getPlayerPoints( $player->id )
+                );
+
+            }
+
+        }
+
+        uasort( $scores, array( $this, '_sortScores') );
+        
+        $this->_view->getView( '/players.php', array( 'scores' => $scores ) );
         
     }
     
@@ -126,7 +158,8 @@ class Controller {
             $this->_api->addGame( intval( $_POST['player_id'] ) );
         }
         
-        header( sprintf( 'Location: %s', $_SERVER['HTTP_REFERER'] ), true );
+        // header( sprintf( 'Location: %s', $_SERVER['HTTP_REFERER'] ), true );
+        header('Location: /');
         exit;
     }
     
