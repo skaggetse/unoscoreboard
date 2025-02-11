@@ -21,6 +21,9 @@ class Controller {
             case 'players' :
                 $this->_getPlayers();
                 break;
+            case 'updatePlayer' :
+                $this->_updatePlayer();
+                break;
             case 'addScore' :
                 $this->_addScore();
                 break;
@@ -42,22 +45,21 @@ class Controller {
         $scores = array();
 
         $players = $this->_api->getPlayers();
-
+        
+        
         if ( ! empty( $players ) ) {
-
+            
             foreach ( $players as $player ) {
-
+                
                 $scores[] = array(
                     'id' => $player->id,
                     'name' => $player->name,
-                    'points' => $this->_api->getPlayerPoints( $player->id )
+                    'stats' => $this->_api->getPlayerStats( $player->id, date( 'Y-m-01'), date( 'Y-m-t' ) )
                 );
-
+                
             }
-
+            
         }
-
-        uasort( $scores, array( $this, '_sortScores') );
         
         $this->_view->getView( '/scoreboard.php', array( 'scores' => $scores ) );
         
@@ -68,27 +70,23 @@ class Controller {
      */
     private function _getPlayers() {
 
-        $scores = array();
-
-        $players = $this->_api->getPlayers();
-
-        if ( ! empty( $players ) ) {
-
-            foreach ( $players as $player ) {
-
-                $scores[] = array(
-                    'id' => $player->id,
-                    'name' => $player->name,
-                    'points' => $this->_api->getPlayerPoints( $player->id )
-                );
-
-            }
-
-        }
-
-        uasort( $scores, array( $this, '_sortScores') );
+        $players = $this->_api->getPlayers( false );
         
-        $this->_view->getView( '/players.php', array( 'scores' => $scores ) );
+        $this->_view->getView( '/players.php', array( 'players' => $players ) );
+        
+    }
+    
+    /**
+     * Set data and view for players
+     */
+    private function _updatePlayer() {
+        
+        if ( isset( $_POST['player_id'] ) && isset( $_POST['player_active'] ) && isset( $_POST['player_name'] ) ) {
+            $this->_api->updatePlayer( intval( $_POST['player_id'] ), array ( 'active' => $_POST['player_active'], 'name' => $_POST['player_name'] ) );
+        }
+        
+        header('Location: /players');
+        exit;
         
     }
     
@@ -98,16 +96,16 @@ class Controller {
     private function _getGames() {
         
         if ( isset( $_GET['month'] ) ) {
-            $month = date( 'Y-m', strtotime( $_GET['month'] ) );
+            $start_date = date( 'Y-m-01', strtotime( $_GET['month'] ) );
+            $end_date = date( 'Y-m-t', strtotime( $_GET['month'] ) );
         } else {
-            $month = date( 'Y-m' );
+            $start_date = date( 'Y-m-01' );
+            $end_date = date( 'Y-m-t' );
         }
         
-        $games = $this->_getMontlyGames( $this->_api->getGames(), $month );
-        
-        uasort( $games, array( $this, '_sortGames') );
+        $games = $this->_api->getGames( $start_date, $end_date );
 
-        $this->_view->getView( '/games.php', array( 'games' => $games, 'month' => $month, 'players' => $this->_api->getPlayers() ) );
+        $this->_view->getView( '/games.php', array( 'games' => $games, 'month' => $start_date, 'players' => $this->_api->getPlayers() ) );
 
     }
     
@@ -130,16 +128,6 @@ class Controller {
     }
     
     /**
-     * Sort player scores, from high to low
-     */
-    private function _sortScores( $a, $b) {
-        if ($a['points'] == $b['points']) {
-            return 0;
-        }
-        return ($a['points'] < $b['points']) ? 1 : -1;
-    }
-    
-    /**
      * Sort games, from high ID to low
      */
     private function _sortGames( $a, $b) {
@@ -154,8 +142,9 @@ class Controller {
      */
     private function _addScore() {
         
-        if ( isset( $_POST['player_id'] ) ) {
-            $this->_api->addGame( intval( $_POST['player_id'] ) );
+        
+        if ( isset( $_POST['winner'] ) && isset( $_POST['participants'] ) ) {
+            $this->_api->addGame( intval( $_POST['winner'] ), $_POST['participants'] );
         }
         
         // header( sprintf( 'Location: %s', $_SERVER['HTTP_REFERER'] ), true );

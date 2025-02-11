@@ -5,7 +5,7 @@
  */
 
 $i = 0;
-if ( isset( $scores ) && !empty( $scores ) ) : ?>
+if ( isset( $players ) && !empty( $players ) ) : ?>
 
     <table width="100%" id="players">
         <tr>
@@ -13,14 +13,12 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
             <td><b>Namn</b></td>
         </tr>
         
-        <?php foreach ( $scores as $score ) : ?>
-            <?php if ( 0 < $score[ 'points' ] ) continue; ?>
-            <?php $i++; ?>
+        <?php foreach ( $players as $player ) : ?>
             <tr>
                 <td>
-                    <?php include __DIR__ . '/components/score-form.php'; ?>
+                    <?php include __DIR__ . '/components/player-form.php'; ?>
                 </td>
-                <td><?php echo str_replace(array('å', 'ä', 'ö', 'Å', 'Ä', 'Ö'), array('&aring;', '&auml;', '&ouml;', '&Aring;', '&Auml;', '&Ouml;'), $score['name']); ?></td>
+                <td><?php echo str_replace(array('å', 'ä', 'ö', 'Å', 'Ä', 'Ö'), array('&aring;', '&auml;', '&ouml;', '&Aring;', '&Auml;', '&Ouml;'), $player->name); ?></td>
             </tr>
 
         <?php endforeach; ?>
@@ -30,6 +28,6 @@ if ( isset( $scores ) && !empty( $scores ) ) : ?>
     
 <?php else : ?>
 
-    <h3>Du m&aring;ste spela n&aring;gra spel f&ouml;rst.</h3>
+    <h3>Det finns inga spelare tillagda &auml;n.</h3>
 
 <?php endif;

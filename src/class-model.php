@@ -82,6 +82,38 @@ class Model {
         }
 
     }
+    
+    /**
+     * Curl PUT orchestration method
+     * 
+     * @since   beginning of time
+     * 
+     * @param   string          $api_endpoint   The API Endpoint
+     * @param   array|string    $body           The data to send in the PUT request
+     * @return  array|string    The Curl response, string for error.
+     */
+    private function _put( $api_endpoint, $body ) {
+        
+        $curl = new Curl();
+        $curl->setHeader('Content-Type', 'application/json');
+
+        $curl->put(
+            sprintf(
+                '%s/%s',
+                $this->api_url,
+                $api_endpoint
+            ),
+            $body
+        );
+
+        if ( $curl->error ) {
+            return 'Error: ' . $curl->errorMessage . "\n";
+            $curl->diagnose();
+        } else {
+            return $curl->response;
+        }
+
+    }
 
     /**
      * Curl GET orchestration method
@@ -117,9 +149,9 @@ class Model {
      * 
      * @since   the code is created
      */
-    public function getPlayers() {
+    public function getPlayers( $only_active = true ) {
 
-        return $this->_get( 'player/all' );
+        return $this->_get( sprintf( 'players?only_active=%s', $only_active ) );
 
     }
 
@@ -140,6 +172,25 @@ class Model {
         );
 
     }
+    
+    /**
+     * Get a specific player
+     * 
+     * @since   today
+     * 
+     * @param   int     $id     The Player ID
+     */
+    public function updatePlayer( $id, $data ) {
+
+        return $this->_put( 
+            sprintf( 
+                'player/%d',
+                $id
+            ),
+            $data
+        );
+
+    }
 
     /**
      * Get a players points
@@ -148,12 +199,18 @@ class Model {
      * 
      * @param   int     $id     The Player ID
      */
-    public function getPlayerPoints( $id ) {
+    public function getPlayerStats( $id, $start_date, $end_date ) {
 
         return $this->_get( 
             sprintf( 
-                'player/%d/points',
-                $id
+                'player/%d/stats?%s',
+                $id,
+                http_build_query(
+                    array(
+                        'start_date' => $start_date,
+                        'end_date' => $end_date
+                    )
+                )
             ) 
         );
 
@@ -163,9 +220,19 @@ class Model {
      * Get all played games
      * 
      */
-    public function getGames() {
+    public function getGames( $start_date, $end_date ) {
 
-        return $this->_get( 'game/all' );
+        return $this->_get( 
+            sprintf( 
+                'games?%s',
+                http_build_query(
+                    array(
+                        'start_date' => $start_date,
+                        'end_date' => $end_date
+                    )
+                )
+            ) 
+        );
 
     }
 
@@ -189,13 +256,18 @@ class Model {
      * 
      * @param   int     $id     The winning player ID
      */
-    public function addGame( $id ) {
+    public function addGame( $winner_id, $participants = array() ) {
 
-        return $this->_post( 
-            'game',
-            array(
-                'winner' => $id
-            )
+        $return = $this->_post( 
+            sprintf( 'game?%s',
+                http_build_query(
+                    array(
+                        'winner' => $winner_id,
+                        'participants' => implode( ',', $participants)
+                    )
+                )
+            ),
+            array()
         );
 
     }

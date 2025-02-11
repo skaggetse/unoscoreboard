@@ -60,6 +60,9 @@
                                 <li>
                                     <a href="/games">Games</a>
                                 </li>
+                                <li>
+                                    <a href="/players">Players</a>
+                                </li>
                             </ul>
                         </td>
                     </tr>
