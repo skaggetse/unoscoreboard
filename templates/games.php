@@ -76,7 +76,7 @@
                     <?php foreach ( $game->participants as $participant ) : ?>
                         <?php echo $participant->name; ?>
                     <?php endforeach; ?>
-                <td>
+                </td>
                 <td>
                     <?php echo $game->winner->name; ?>
                 </td>
