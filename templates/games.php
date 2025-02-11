@@ -14,7 +14,7 @@
 
 <?php if ( date('Y-m', strtotime( $month )) == date('Y-m') ) : ?>
 <table>
-    <h1>Lägg till spel</h1>
+    <h1>L&auml;gg till spel</h1>
     <form action="/addScore" method="post">
         <div>
             <h3>Vinnare</h3>

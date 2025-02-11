@@ -9,7 +9,7 @@ if ( isset( $players ) && !empty( $players ) ) : ?>
 
     <table width="100%" id="players">
         <tr>
-            <td><b>Lägg till</b></td>
+            <td><b>L&auml;gg till</b></td>
             <td><b>Namn</b></td>
         </tr>
         
