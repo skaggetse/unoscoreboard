@@ -16,26 +16,22 @@
 <table>
     <h1>L&auml;gg till spel</h1>
     <form action="/addScore" method="post">
-        <div>
-            <h3>Vinnare</h3>
-            <div style="display:flex">
-                <?php foreach ($players as $player) : ?>
-                    <div>
-                        <input type="radio" id="winner_<?php echo $player->id; ?>" name="winner" value="<?php echo $player->id; ?>">
-                        <label for="winner_<?php echo $player->id; ?>"><?php echo $player->name; ?></label>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+        <h3>Vinnare</h3>
+            <?php foreach ($players as $player) : ?>
+                <div class="player-checkbox">
+                    <input type="radio" id="winner_<?php echo $player->id; ?>" name="winner" value="<?php echo $player->id; ?>" style="width:40px;height:40px;">
+                    <label for="winner_<?php echo $player->id; ?>"><?php echo $player->name; ?></label>
+                </div>
+            <?php endforeach; ?>
+            <div class="clear-fix"></div>
             <h3>Deltagare</h3>
-            <div style="display:flex">
-                <?php foreach ($players as $player) : ?>
-                    <div>
-                        <input type="checkbox" id="participant_<?php echo $player->id; ?>" name="participants[]" value="<?php echo $player->id; ?>">
-                        <label for="participant_<?php echo $player->id; ?>"><?php echo $player->name; ?></label>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div><br />
+            <?php foreach ($players as $player) : ?>
+                <div class="player-checkbox">
+                    <input type="checkbox" id="participant_<?php echo $player->id; ?>" name="participants[]" value="<?php echo $player->id; ?>"  style="width:40px;height:40px;">
+                    <label for="participant_<?php echo $player->id; ?>"><?php echo $player->name; ?></label>
+                </div>
+            <?php endforeach; ?>
+            <div class="clear-fix"></div>
         <button type="submit">Spara</button>
     </form>
 </table>

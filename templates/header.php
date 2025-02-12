@@ -38,6 +38,31 @@
         #scoreboard tr:nth-child(4n+5) {
             background: rgba( 255,255,0,0.1);
         }
+        
+        .player-checkbox {
+            float: left;
+            margin: 0 5px 5px 0;
+        }
+        .player-checkbox input {
+            display: none;
+        }
+        
+        .player-checkbox label {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        .player-checkbox input:checked + label {
+            background: #f00;
+        }
+        
+        .clear-fix {
+            clear: both;
+        }
+        
     </style>
 </head>
 <body>
