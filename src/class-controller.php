@@ -54,7 +54,7 @@ class Controller {
                 $scores[] = array(
                     'id' => $player->id,
                     'name' => $player->name,
-                    'stats' => $this->_api->getPlayerStats( $player->id, date( 'Y-m-01'), date( 'Y-m-t' ) )
+                    'stats' => $this->_api->getPlayerStats( $player->id, date( 'Y-m-01'), date( 'Y-m-t 23:59:59' ) )
                 );
                 
             }
@@ -97,10 +97,10 @@ class Controller {
         
         if ( isset( $_GET['month'] ) ) {
             $start_date = date( 'Y-m-01', strtotime( $_GET['month'] ) );
-            $end_date = date( 'Y-m-t', strtotime( $_GET['month'] ) );
+            $end_date = date( 'Y-m-t 23:59:59', strtotime( $_GET['month'] ) );
         } else {
             $start_date = date( 'Y-m-01' );
-            $end_date = date( 'Y-m-t' );
+            $end_date = date( 'Y-m-t 23:59:59' );
         }
         
         $games = $this->_api->getGames( $start_date, $end_date );
